@@ -1,0 +1,59 @@
+#!/bin/bash
+
+TOBUILD=transmission-1.92
+wget -nc https://github.com/transmission/transmission-releases/raw/master/$TOBUILD.tar.bz2
+
+echo "Build $TOBUILD"
+
+# cd src
+
+if ! [ -d $TOBUILD ]; then
+ tar xvjf $TOBUILD.tar
+fi
+
+echo "Changing directory $TOBUILD"
+cd $TOBUILD
+
+CROSS=/usr/tool-chain/cross
+TOOLS=$CROSS/tools/bin
+DEST=/usr/tool-chain/built
+
+export CPPFLAGS=$CFLAGS
+export CC=arm-vz-linux-gnueabi-gcc
+export CPP=arm-vz-linux-gnueabi-cpp
+export LD=arm-vz-linux-gnueabi-ld
+export CXX=arm-vz-linux-gnueabi-g++
+export RANLIB=arm-vz-linux-gnueabi-ranlib
+export AR=arm-vz-linux-gnueabi-ar
+export PATH=$TOOLS:$PATH
+export LD_LIBRARY_PATH=$CROSS/sysroot/usr/lib:$DEST/lib
+export LDFLAGS="-Wl,-z,max-page-size=0x10000,-z,common-page-size=0x10000,-Ttext-segment=0x10000"
+export CFLAGS="-march=armv6k --sysroot=$CROSS/sysroot -I$DEST/include -L$DEST/lib"
+export cross_compiling=yes
+export ARCH=armv6k
+
+cat > cmake_toolchain_file.$ARCH << EOF
+SET(CMAKE_SYSTEM_NAME Linux)
+SET(CMAKE_SYSTEM_PROCESSOR ${ARCH})
+SET(CMAKE_C_COMPILER ${CC})
+SET(CMAKE_CXX_COMPILER ${CXX})
+SET(CMAKE_AR ${AR})
+SET(CMAKE_RANLIB ${RANLIB})
+SET(CMAKE_STRIP ${STRIP})
+SET(CMAKE_CROSSCOMPILING TRUE)
+SET(STACK_DIRECTION 1)
+SET(CMAKE_FIND_ROOT_PATH ${TOOLCHAIN}/arm-none-linux-gnueabi/libc)
+SET(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
+SET(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+SET(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+EOF
+
+exit
+
+./configure --target=arm-vz-linux-gnueabi --host=arm-vz-linux-gnueabi --prefix=$DEST \
+ ac_cv_sys_restartable_syscalls='no' 
+
+
+make clean
+make all
+make install

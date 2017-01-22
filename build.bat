@@ -1,0 +1,1 @@
+docker build --tag seagate-nas-central-toolchain . 

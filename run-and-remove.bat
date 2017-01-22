@@ -1,0 +1,1 @@
+docker run -it --rm seagate-nas-central-toolchain
