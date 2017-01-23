@@ -1,3 +1,6 @@
+FROM ubuntu:14.04
+
+MAINTAINER mauro-dellachiesa
 # Set this to inform dpkg the corrrect frontend to use when installing
 ENV DEBIAN_FRONTEND noninteractive
 
