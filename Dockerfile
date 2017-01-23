@@ -57,8 +57,8 @@ RUN bzip2 -d gcc.tar.bz2
 RUN tar -xvf gcc.tar
 
 RUN unzip -p seagate-central-firmware-gpl-source-code.zip sources/GPL/linux/git_.home.cirrus.cirrus_repos.linux_6065f48ac9974b200566c51d58bced9c639a2aad.tar.gz > git_.home.cirrus.cirrus_repos.linux_6065f48ac9974b200566c51d58bced9c639a2aad.tar.gz
-RUN bzip2 -d git_.home.cirrus.cirrus_repos.linux_6065f48ac9974b200566c51d58bced9c639a2aad.tar.gz
-RUN tar -xvf git_.home.cirrus.cirrus_repos.linux_6065f48ac9974b200566c51d58bced9c639a2aad.tar
+RUN tar -zxvf git_.home.cirrus.cirrus_repos.linux_6065f48ac9974b200566c51d58bced9c639a2aad.tar.gz
+#RUN tar -xvf git_.home.cirrus.cirrus_repos.linux_6065f48ac9974b200566c51d58bced9c639a2aad.tar
 
 RUN unzip -p seagate-central-firmware-gpl-source-code.zip sources/LGPL/glibc/ > glibc.tar.bz2
 RUN bzip2 -d glibc.tar.bz2
