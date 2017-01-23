@@ -30,7 +30,7 @@ RUN apt-get update && apt-get install -y \
         libminiupnpc-dev \
         libappindicator-dev
 
-RUN mkdir /usr/tool-chain
+RUN mkdir -p /usr/tool-chain/src
 
 # Add the particular texinfo that works
 ADD http://launchpadlibrarian.net/125194117/texinfo_4.13a.dfsg.1-10ubuntu4_amd64.deb /usr/tool-chain/
@@ -42,7 +42,7 @@ RUN sudo dpkg -i /usr/tool-chain/texinfo_4.13a.dfsg.1-10ubuntu4_amd64.deb
 
 # Add src folder
 #ADD ./resources /usr/tool-chain
-ADD http://www.seagate.com/files/www-content/support-content/external-products/seagate-central/_shared/downloads/seagate-central-firmware-gpl-source-code.zip /usr/tool-chain
+ADD http://www.seagate.com/files/www-content/support-content/external-products/seagate-central/_shared/downloads/seagate-central-firmware-gpl-source-code.zip /usr/tool-chain/src
 
 # Alternatively, download the source
 #ADD http://www.seagate.com/files/www-content/support-content/external-products/seagate-central/_shared/downloads/seagate-central-firmware-gpl-source-code.zip /usr/tool-chain
@@ -50,7 +50,7 @@ ADD http://www.seagate.com/files/www-content/support-content/external-products/s
 # Add the maketoolchain script (https://sites.google.com/site/modcentralnas/script-make-tool-chain/maketoolchain?attredirects=0&d=1)
 ADD ./resources/maketoolchain /usr/tool-chain
 
-WORKDIR /usr/tool-chain/
+WORKDIR /usr/tool-chain/src
 
 RUN unzip -p seagate-central-firmware-gpl-source-code.zip sources/GPL/gcc/gcc.tar.bz2 > gcc.tar.bz2
 RUN bzip2 -d gcc.tar.bz2
@@ -71,7 +71,7 @@ RUN tar -xvf glibc_ports.tar
 #RUN mkdir ./linux
 RUN mv git linux
 
-RUN ln -s ../glibc-ports-2.11-2010q1-mvl6/ /usr/tool-chain/glibc-2.11-2010q1-mvl6/ports
+RUN ln -s ../glibc-ports-2.11-2010q1-mvl6/ /usr/tool-chain/src/glibc-2.11-2010q1-mvl6/ports
 
 WORKDIR /usr/tool-chain
 
