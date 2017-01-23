@@ -76,6 +76,7 @@ RUN ln -s ../glibc-ports-2.11-2010q1-mvl6/ /usr/tool-chain/glibc-2.11-2010q1-mvl
 WORKDIR /usr/tool-chain
 
 # /usr/tool-chain/cross/config_binutils.log RUN ./maketoolchain
+RUN chmod +x ./maketoolchain
 RUN ./maketoolchain
 ENTRYPOINT /bin/bash
 #ENTRYPOINT ["/bin/bash", "./maketoolchain"]
