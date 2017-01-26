@@ -4,10 +4,12 @@ MAINTAINER mauro-dellachiesa
 # Set this to inform dpkg the corrrect frontend to use when installing
 ENV DEBIAN_FRONTEND noninteractive
 
+#RUN sed -ie 's/archive.ubuntu.com/ubnt-archive.xfree.com.ar/g' /etc/apt/sources.list
+RUN sed -i '1s/^/deb mirror:\/\/mirrors.ubuntu.com\/mirrors.txt trusty main restricted universe multiverse \n deb mirror:\/\/mirrors.ubuntu.com\/mirrors.txt trusty-updates main restricted universe multiverse \n deb mirror:\/\/mirrors.ubuntu.com\/mirrors.txt trusty-security main restricted universe multiverse \n /' /etc/apt/sources.list
 #RUN echo "precedence ::ffff:0:0/96 100" > /etc/gai.conf
-RUN echo 'Acquire::ForceIPv4 "true";' | tee /etc/apt/apt.conf.d/99force-ipv4
+#RUN echo 'Acquire::ForceIPv4 "true";' | tee /etc/apt/apt.conf.d/99force-ipv4
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get -y \
         gcc-arm-linux-gnueabi \
         unzip \
         wget \
@@ -72,6 +74,18 @@ RUN tar -xvf glibc_ports.tar
 RUN mv git linux
 
 RUN ln -s ../glibc-ports-2.11-2010q1-mvl6/ /usr/tool-chain/src/glibc-2.11-2010q1-mvl6/ports
+
+RUN rm /usr/tool-chain/src/seagate-central-firmware-gpl-source-code.zip
+
+RUN rm /usr/tool-chain/src/gcc.tar.bz2
+RUN rm /usr/tool-chain/src/gcc.tar
+
+RUN rm /usr/tool-chain/src/glibc.tar.bz2
+RUN rm /usr/tool-chain/src/glibc.tar
+
+RUN rm /usr/tool-chain/src/glibc_ports.tar.bz2
+RUN rm /usr/tool-chain/src/glibc_ports.tar
+
 
 WORKDIR /usr/tool-chain
 
