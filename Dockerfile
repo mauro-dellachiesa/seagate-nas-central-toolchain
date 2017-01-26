@@ -9,7 +9,7 @@ RUN sed -i '1s/^/deb mirror:\/\/mirrors.ubuntu.com\/mirrors.txt trusty main rest
 #RUN echo "precedence ::ffff:0:0/96 100" > /etc/gai.conf
 #RUN echo 'Acquire::ForceIPv4 "true";' | tee /etc/apt/apt.conf.d/99force-ipv4
 
-RUN apt-get update && apt-get -y \
+RUN apt-get update && apt-get install -y \
         gcc-arm-linux-gnueabi \
         unzip \
         wget \
