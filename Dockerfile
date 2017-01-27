@@ -77,13 +77,10 @@ RUN ln -s ../glibc-ports-2.11-2010q1-mvl6/ /usr/tool-chain/src/glibc-2.11-2010q1
 
 RUN rm /usr/tool-chain/src/seagate-central-firmware-gpl-source-code.zip
 
-RUN rm /usr/tool-chain/src/gcc.tar.bz2
 RUN rm /usr/tool-chain/src/gcc.tar
 
-RUN rm /usr/tool-chain/src/glibc.tar.bz2
 RUN rm /usr/tool-chain/src/glibc.tar
 
-RUN rm /usr/tool-chain/src/glibc_ports.tar.bz2
 RUN rm /usr/tool-chain/src/glibc_ports.tar
 
 
