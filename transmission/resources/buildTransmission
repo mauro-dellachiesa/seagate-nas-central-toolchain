@@ -1,14 +1,12 @@
 #!/bin/bash
-
-TOBUILD=transmission-1.92
-wget -nc https://github.com/transmission/transmission-releases/raw/master/$TOBUILD.tar.bz2
-
 echo "Build $TOBUILD"
 
 # cd src
 
 if ! [ -d $TOBUILD ]; then
- tar xvjf $TOBUILD.tar
+ #tar xvjf $TOBUILD.tar
+ bzip2 -d ${TOBUILD}.tar.bz2
+ tar -xvf ${TOBUILD}.tar
 fi
 
 echo "Changing directory $TOBUILD"
@@ -48,8 +46,7 @@ SET(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
 SET(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 EOF
 
-exit
-
+#exit
 ./configure --target=arm-vz-linux-gnueabi --host=arm-vz-linux-gnueabi --prefix=$DEST \
  ac_cv_sys_restartable_syscalls='no' 
 
